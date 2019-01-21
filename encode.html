@@ -5,13 +5,12 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="ie=edge" />
         <title>Document</title>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
     <body>
         Plaintext : <input type="text" id="plaintextEncode" />
         <p></p>
         Key : <input type="text" id="keyEncode" />
-        <button id="btnEncode">Encode</button>
+        <button id="btnEncode" onclick="Encode()">Encode</button>
         <p>Encode : <span id="textEncode"></span></p>
 
         <hr />
@@ -19,73 +18,73 @@
         Plaintext : <input type="text" id="plaintextDecode" />
         <p></p>
         Key : <input type="text" id="keyDecode" />
-        <button id="btnDecode">Decode</button>
+        <button id="btnDecode" onclick="Decode()">Decode</button>
         <p>Decode : <span id="textDecode"></span></p>
 
         <script>
-            $(document).ready(function() {
-                const alphabet = "abcdefghijklmnopqrstuvwxyz"
-                const keys = {
-                    a: "abcdefghijklmnopqrstuvwxyz",
-                    b: "bcdefghijklmnopqrstuvwxyza",
-                    c: "cdefghijklmnopqrstuvwxyzab",
-                    d: "defghijklmnopqrstuvwxyzabc",
-                    e: "efghijklmnopqrstuvwxyzabcd",
-                    f: "fghijklmnopqrstuvwxyzabcde",
-                    g: "fghijklmnopqrstuvwxyzabcde",
-                    h: "hijklmnopqrstuvwxyzabcdefg",
-                    i: "ijklmnopqrstuvwxyzabcdefgh",
-                    j: "jklmnopqrstuvwxyzabcdefghi",
-                    k: "klmnopqrstuvwxyzabcdefghij",
-                    l: "lmnopqrstuvwxyzabcdefghijk",
-                    m: "mnopqrstuvwxyzabcdefghijkl",
-                    n: "nopqrstuvwxyzabcdefghijklm",
-                    o: "opqrstuvwxyzabcdefghijklmn",
-                    p: "pqrstuvwxyzabcdefghijklmno",
-                    q: "qrstuvwxyzabcdefghijklmnop",
-                    r: "rstuvwxyzabcdefghijklmnopq",
-                    s: "stuvwxyzabcdefghijklmnopqr",
-                    t: "tuvwxyzabcdefghijklmnopqrs",
-                    u: "uvwxyzabcdefghijklmnopqrst",
-                    v: "vwxyzabcdefghijklmnopqrstu",
-                    w: "wxyzabcdefghijklmnopqrstuv",
-                    x: "xyzabcdefghijklmnopqrstuvw",
-                    y: "yzabcdefghijklmnopqrstuvwx",
-                    z: "zabcdefghijklmnopqrstuvwxy"
+            const alphabet = "abcdefghijklmnopqrstuvwxyz"
+            const keys = {
+                a: "abcdefghijklmnopqrstuvwxyz",
+                b: "bcdefghijklmnopqrstuvwxyza",
+                c: "cdefghijklmnopqrstuvwxyzab",
+                d: "defghijklmnopqrstuvwxyzabc",
+                e: "efghijklmnopqrstuvwxyzabcd",
+                f: "fghijklmnopqrstuvwxyzabcde",
+                g: "fghijklmnopqrstuvwxyzabcde",
+                h: "hijklmnopqrstuvwxyzabcdefg",
+                i: "ijklmnopqrstuvwxyzabcdefgh",
+                j: "jklmnopqrstuvwxyzabcdefghi",
+                k: "klmnopqrstuvwxyzabcdefghij",
+                l: "lmnopqrstuvwxyzabcdefghijk",
+                m: "mnopqrstuvwxyzabcdefghijkl",
+                n: "nopqrstuvwxyzabcdefghijklm",
+                o: "opqrstuvwxyzabcdefghijklmn",
+                p: "pqrstuvwxyzabcdefghijklmno",
+                q: "qrstuvwxyzabcdefghijklmnop",
+                r: "rstuvwxyzabcdefghijklmnopq",
+                s: "stuvwxyzabcdefghijklmnopqr",
+                t: "tuvwxyzabcdefghijklmnopqrs",
+                u: "uvwxyzabcdefghijklmnopqrst",
+                v: "vwxyzabcdefghijklmnopqrstu",
+                w: "wxyzabcdefghijklmnopqrstuv",
+                x: "xyzabcdefghijklmnopqrstuvw",
+                y: "yzabcdefghijklmnopqrstuvwx",
+                z: "zabcdefghijklmnopqrstuvwxy"
+            }
+
+            // Encode
+            function Encode() {
+                let encode = ""
+                let keyEncode = document.getElementById("keyEncode").value
+                let plaintextEncode = document.getElementById("plaintextEncode")
+                    .value
+                if (keyEncode.length !== plaintextEncode.length) {
+                    return alert("Plaintext and Key don't match!")
                 }
+                for (let i in keyEncode) {
+                    let key = keys[keyEncode[i]]
+                    let indexOfalp = alphabet.indexOf(plaintextEncode[i])
+                    encode += key[indexOfalp]
+                }
+                document.getElementById("textEncode").innerText = encode
+            }
 
-                // Encode
-                $("#btnEncode").click(function() {
-                    let encode = ""
-                    let keyEncode = $("#keyEncode").val()
-                    let plaintextEncode = $("#plaintextEncode").val()
-                    if (keyEncode.length !== plaintextEncode.length) {
-                        return alert("Plaintext and Key don't match!")
-                    }
-                    for (let i in keyEncode) {
-                        let key = keys[keyEncode[i]]
-                        let indexOfalp = alphabet.indexOf(plaintextEncode[i])
-                        encode += key[indexOfalp]
-                    }
-                    $("#textEncode").text(encode)
-                })
-
-                // Decode
-                $("#btnDecode").click(function() {
-                    let decode = ""
-                    let keyDecode = $("#keyDecode").val()
-                    let plaintextDecode = $("#plaintextDecode").val()
-                    if (keyDecode.length !== plaintextDecode.length) {
-                        return alert("Plaintext and Key don't match!")
-                    }
-                    for (let i in keyDecode) {
-                        let key = keys[keyDecode[i]]
-                        let indexOfkey = key.indexOf(plaintextDecode[i])
-                        decode += alphabet[indexOfkey]
-                    }
-                    $("#textDecode").text(decode)
-                })
-            })
+            // Decode
+            function Decode() {
+                let decode = ""
+                let keyDecode = document.getElementById("keyDecode").value
+                let plaintextDecode = document.getElementById("plaintextDecode")
+                    .value
+                if (keyDecode.length !== plaintextDecode.length) {
+                    return alert("Plaintext and Key don't match!")
+                }
+                for (let i in keyDecode) {
+                    let key = keys[keyDecode[i]]
+                    let indexOfkey = key.indexOf(plaintextDecode[i])
+                    decode += alphabet[indexOfkey]
+                }
+                document.getElementById("textDecode").innerText = decode
+            }
         </script>
     </body>
 </html>
